@@ -20,6 +20,9 @@ import {Top5Form} from "./top5-form.ts";
     <hr>
   </div>
 
+  <input type="text" #searchtext placeholder="Search...">
+  <button type="button" (click)="search(searchtext.value)">Search</button>
+
   <h2>Top5 - List</h2>
   <table class="table table-hover">
     <tr>
@@ -55,5 +58,13 @@ export class Top5List extends MeteorComponent {
 
   remove(i) {
     Top5.remove(i._id);
+  }
+
+  search(value: string) {
+    if (value) {
+      this.top5 = Top5.find({name: value});
+    } else {
+      this.top5 = Top5.find();
+    }
   }
 }
