@@ -43,7 +43,7 @@ export class Top5Details extends MeteorComponent {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
 
-      this.subscribe('top5', () => {
+      this.subscribe('top5', this.id, () => {
         Tracker.autorun(() => {
           this.ngZone.run(() => {
              this.top5 = Top5.findOne(this.id);
