@@ -5,6 +5,8 @@ import {Component, NgZone } from '@angular/core';
 import {Mongo} from "meteor/mongo";
 import { ActivatedRoute } from '@angular/router';
 import { ROUTER_DIRECTIVES }  from '@angular/router';
+import { MeteorComponent } from 'angular2-meteor';
+
 
 import {Top5} from "/collections/top5.ts"; 
 
@@ -29,20 +31,23 @@ import {Top5} from "/collections/top5.ts";
   directives: [ROUTER_DIRECTIVES],
 })
 
-export class Top5Details { 
+export class Top5Details extends MeteorComponent { 
   id: string;
   top5: Top5;
  
-  constructor(private route: ActivatedRoute, private ngZone: NgZone) {}
+  constructor(private route: ActivatedRoute, private ngZone: NgZone) {
+    super();
+  }
  
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
 
-//      this.top5 = Top5.findOne(this.id);
-      Tracker.autorun(() => {
-        this.ngZone.run(() => {
-          this.top5 = Top5.findOne(this.id);
+      this.subscribe('top5', () => {
+        Tracker.autorun(() => {
+          this.ngZone.run(() => {
+             this.top5 = Top5.findOne(this.id);
+          }, true);
         });
       });
     });

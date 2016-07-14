@@ -45,9 +45,12 @@ export class Top5List extends MeteorComponent {
    top5: Mongo.Cursor<Top5>;
 
    constructor() {
-    super();
+     super();
+
      console.log("main::constructor");
-     this.top5 = Top5.find();
+     this.subscribe('top5', () => {
+       this.top5 = Top5.find();
+     }, true);
    }
 
   remove(i) {
