@@ -92,9 +92,7 @@ export class Top5List extends MeteorComponent {
 
   search(value: string) {
     if (value) {
-      //this.top5 = Top5.find({name: value});
       this.top5 = Top5.find({name: {$regex: '.*' + value + '.*', $options: 'i'}});
-console.log("%O", {name: {$regex: '.*' + value + '.*', $options: 'i'}});
     } else {
       this.top5 = Top5.find();
     }
@@ -103,6 +101,7 @@ console.log("%O", {name: {$regex: '.*' + value + '.*', $options: 'i'}});
  onPageChanged(page: number) {
     console.log("page: " + page);
     this.curPage.set(page);
+
   }
 
   changeSortOrder(nameOrder: string) {
