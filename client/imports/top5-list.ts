@@ -8,6 +8,7 @@ import {Mongo} from "meteor/mongo";
 import {MeteorComponent} from 'angular2-meteor';
 import {InjectUser} from 'angular2-meteor-accounts-ui';
 import {PaginationService, PaginatePipe, PaginationControlsCmp} from 'angular2-pagination';
+import {GOOGLE_MAPS_DIRECTIVES, MouseEvent} from 'angular2-google-maps/core';
 
 /* Stuff */
 import {Top5} from "/collections/top5.ts"; 
@@ -17,7 +18,7 @@ import {Top5Form} from "./top5-form.ts";
   selector: "top5-list",
   viewProviders: [PaginationService],
   template: `
-    <div *ngIf="user">
+    <div *ngIf="user" class="jumbotron">
       <top5-form></top5-form>
       <hr>
     </div>
@@ -46,8 +47,20 @@ import {Top5Form} from "./top5-form.ts";
       </tr>
     </table>
     <pagination-controls (change)="onPageChanged($event.page)"></pagination-controls>
+
+<sebm-google-map
+        [latitude]="lat || centerLat"
+        [longitude]="lng || centerLng"
+        [zoom]="8"
+        (mapClick)="mapClicked($event)">
+  <sebm-google-map-marker
+          *ngIf="lat && lng"
+          [latitude]="lat"
+          [longitude]="lng">
+  </sebm-google-map-marker>
+</sebm-google-map>
   `,
-  directives: [Top5Form, ROUTER_DIRECTIVES, PaginationControlsCmp],
+  directives: [Top5Form, ROUTER_DIRECTIVES, GOOGLE_MAPS_DIRECTIVES, PaginationControlsCmp],
   pipes: [PaginatePipe],
 })
 
@@ -61,6 +74,8 @@ export class Top5List extends MeteorComponent {
    nameOrder: ReactiveVar<number> = new ReactiveVar<number>(1);
    curPage: ReactiveVar<number> = new ReactiveVar<number>(1);
    size: number = 0;
+centerLat: Number = 37.4292;
+  centerLng: Number = -122.1381;
 
    constructor() {
      super();
