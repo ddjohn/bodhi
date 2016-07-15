@@ -6,10 +6,10 @@ import {Component} from "@angular/core";
 import {ROUTER_DIRECTIVES } from '@angular/router';
 import {LoginButtons} from 'angular2-meteor-accounts-ui';
 
-
 /* Stuff */
 import {MyHeader} from "./imports/header.ts";
 import {MyFooter} from "./imports/footer.ts";
+import "/collections/methods.ts";
 
 @Component({
   selector: "app",
@@ -22,9 +22,15 @@ import {MyFooter} from "./imports/footer.ts";
 		<router-outlet></router-outlet>
 	</div>
 
+	<button (click)="mail('Hello world')">Mail</button>
 	<my-footer></my-footer>`,
   directives: [MyHeader, MyFooter, ROUTER_DIRECTIVES],
 })
 
-export class Application { }
+export class Application { 
+
+  mail(text: string) {
+    Meteor.call("mail", text);
+  }
+}
 

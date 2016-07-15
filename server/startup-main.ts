@@ -3,6 +3,8 @@ console.log("Loading <startup-main.ts>...");
 import { Top5 } from "../collections/top5.ts";
  
 export function startupMain() {
+//  process.env.MAIL_URL = 'smtp://postmaster%40meteorize.mailgun.org:YOURPASSWORD@smtp.mailgun.org:587';
+
   if (Top5.find().count() === 0) {
 
     var top5 = [
