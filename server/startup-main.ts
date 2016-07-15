@@ -19,6 +19,10 @@ export function startupMain() {
     for (var i = 0; i < top5.length; i++) {
       Top5.insert(top5[i]);
     }
+
+    for(let i = 0; i < 100; i++) {
+      Top5.insert({category:Fake.sentence(16), name:Fake.sentence(32)});
+    }
   }
 }
 

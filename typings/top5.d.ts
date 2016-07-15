@@ -3,3 +3,7 @@ interface Top5 {
   category: string;
   name: string;
 }
+
+declare var Fake: {
+    sentence(words: number): string;
+}

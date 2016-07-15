@@ -20,3 +20,5 @@ angular2-compilers
 barbatus:angular2-runtime
 twbs:bootstrap
 accounts-password
+tmeasday:publish-counts
+anti:fake
