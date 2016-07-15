@@ -7,7 +7,7 @@ import {Counts} from 'meteor/tmeasday:publish-counts';
  
 Meteor.publish('top5s', function(options: Object) {
   console.log("any-publish...");
-  Counts.publish(this, 'numberOfParties', Top5.find({}), { noReady: true });
+  Counts.publish(this, 'numberOf', Top5.find({}), {noReady: true});
 
   return Top5.find({}, options);
 });

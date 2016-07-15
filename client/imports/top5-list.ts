@@ -25,14 +25,14 @@ import {Top5Form} from "./top5-form.ts";
   <input type="text" #searchtext placeholder="Search...">
   <button type="button" (click)="search(searchtext.value)">Search</button>
 
-  <h2>Top5 - List</h2>
+  <h2>Top5 - List of {{size}} items</h2>
   <table class="table table-hover">
     <tr>
       <th>Category</th>
       <th>Name</th>
       <th *ngIf="user">Actions</th>
     </tr>
-    <tr *ngFor="let i of top5 | paginate:{currentPage:1, itemsPerPage:pageSize, totalItems:30}">
+    <tr *ngFor="let i of top5 | paginate:{currentPage:1, itemsPerPage:pageSize, totalItems:size}">
       <td>{{i.category}}</td>
       <td *ngIf="user"><a [routerLink]="['/top5', i._id]">{{i.name}}</a></td>
       <td *ngIf="!user">{{i.name}}</td>
@@ -53,6 +53,8 @@ export class Top5List extends MeteorComponent {
    pageSize: number = 5;
    nameOrder: number = 1;
    curPage: ReactiveVar<number> = new ReactiveVar<number>(1);
+   size: number = 0;
+
 
    constructor() {
      super();
@@ -67,6 +69,10 @@ export class Top5List extends MeteorComponent {
 
      this.subscribe('top5s', options, () => {
        this.top5 = Top5.find({}, {sort: {name:this.nameOrder}});
+     }, true);
+
+     this.autorun(() => {
+       this.size = Counts.get('numberOf');
      }, true);
    }
 
